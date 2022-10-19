@@ -21,8 +21,6 @@ import (
 // @name Authorization
 
 func main() {
-	//TODO настроить вывод стандартных логов в поток сервера
-	//logrus.SetFormatter(new(logrus.JSONFormatter))
 	logger := logging.GetLooger()
 
 	if err := initConfig(); err != nil {
@@ -50,13 +48,13 @@ func runHttp(srv *gopitman.Server, handler *handler.Handler, logger logging.Logg
 		}
 	}()
 
-	logger.Print("BonusApp Started")
+	logger.Print("APP Started")
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<-quit
 
-	logger.Print("BonusApp Shutting Down")
+	logger.Print("App Shutting Down")
 
 	if err := srv.Shutdown(context.Background()); err != nil {
 		logger.Errorf("error occured on server shutting down: %s", err.Error())
@@ -71,8 +69,8 @@ func initConfig() error {
 
 func init() {
 	// programmatically set swagger info
-	docs.SwaggerInfo.Title = "Bonus API"
-	docs.SwaggerInfo.Description = "Bonus swagger api examples"
+	docs.SwaggerInfo.Title = "GOPITMAN API"
+	docs.SwaggerInfo.Description = "Basic set of tools and practices for API(Rest) services"
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = "localhost:8080"
 	docs.SwaggerInfo.BasePath = "/"

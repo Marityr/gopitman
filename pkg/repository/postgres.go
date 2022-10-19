@@ -54,8 +54,6 @@ func NewPostgresDB(v *viper.Viper) (*gorm.DB, error) {
 		logger.Fatal(err)
 	}
 
-	AutoMigrate(db)
-
 	DB = db
 
 	return db, nil
