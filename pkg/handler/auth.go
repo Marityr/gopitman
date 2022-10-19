@@ -13,7 +13,7 @@ import (
 // @ID create-account
 // @Accept  json
 // @Produce  json
-// @Param input body dwbonusapi.User true "account info"
+// @Param input body gopitman.User true "account info"
 // @Router /auth/sign-up [post]
 func (h *Handler) signUp(c *gin.Context) {
 	var input gopitman.User
