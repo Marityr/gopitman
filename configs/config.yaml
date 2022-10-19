@@ -1,0 +1,9 @@
+port: "8080"
+
+db:
+  host:     "localhost"
+  port:     "5432"
+  username: "arch"
+  password: "123456"
+  dbname:   "gopitman"
+  sslmode:  "postgres"
