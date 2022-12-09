@@ -1,4 +1,21 @@
 definitions:
+  gopitman.UpdateCustomer:
+    properties:
+      activated:
+        type: string
+      birthday:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      referrer_code:
+        type: string
+      second_name:
+        type: string
+      sex:
+        type: string
+    type: object
   gopitman.User:
     properties:
       name:
@@ -9,6 +26,31 @@ definitions:
         type: string
     required:
     - name
+    - password
+    - username
+    type: object
+  handler.createCustomerinput:
+    properties:
+      birthday:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      phone:
+        type: string
+      referrerCode:
+        type: string
+    type: object
+  handler.sigInInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
     - password
     - username
     type: object
@@ -34,9 +76,109 @@ paths:
       responses: {}
       security:
       - ApiKeyAuth: []
-      summary: Customer
+      summary: CustomerAll
       tags:
-      - Frontend
+      - customer
+    post:
+      consumes:
+      - application/json
+      description: create customer
+      operationId: create-customer
+      parameters:
+      - description: list info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.createCustomerinput'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Create customer
+      tags:
+      - customer
+  /api/v1/customer/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Customer delete
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Customer Delete
+      tags:
+      - customer
+    get:
+      consumes:
+      - application/json
+      description: Customer get by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Customer By Id
+      tags:
+      - customer
+    put:
+      consumes:
+      - application/json
+      description: Customer update
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: customer info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/gopitman.UpdateCustomer'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Customer Update
+      tags:
+      - customer
+  /auth/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: Auth token
+      operationId: aunhetication
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.sigInInput'
+      produces:
+      - application/json
+      responses: {}
+      summary: SignIn
+      tags:
+      - auth
   /auth/sign-up:
     post:
       consumes:

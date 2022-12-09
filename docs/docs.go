@@ -31,9 +31,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Frontend"
+                    "customer"
                 ],
-                "summary": "Customer",
+                "summary": "CustomerAll",
                 "parameters": [
                     {
                         "type": "string",
@@ -46,6 +46,160 @@ const docTemplate = `{
                         "description": "Limit",
                         "name": "limit",
                         "in": "query"
+                    }
+                ],
+                "responses": {}
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "create customer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Create customer",
+                "operationId": "create-customer",
+                "parameters": [
+                    {
+                        "description": "list info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.createCustomerinput"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/v1/customer/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Customer get by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Customer By Id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Customer update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Customer Update",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "customer info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/gopitman.UpdateCustomer"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Customer delete",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Customer Delete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/sign-in": {
+            "post": {
+                "description": "Auth token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "SignIn",
+                "operationId": "aunhetication",
+                "parameters": [
+                    {
+                        "description": "account info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.sigInInput"
+                        }
                     }
                 ],
                 "responses": {}
@@ -81,6 +235,32 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "gopitman.UpdateCustomer": {
+            "type": "object",
+            "properties": {
+                "activated": {
+                    "type": "string"
+                },
+                "birthday": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "referrer_code": {
+                    "type": "string"
+                },
+                "second_name": {
+                    "type": "string"
+                },
+                "sex": {
+                    "type": "string"
+                }
+            }
+        },
         "gopitman.User": {
             "type": "object",
             "required": [
@@ -92,6 +272,44 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "handler.createCustomerinput": {
+            "type": "object",
+            "properties": {
+                "birthday": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "referrerCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "handler.sigInInput": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
                 "password": {
                     "type": "string"
                 },

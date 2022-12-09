@@ -1,38 +1,42 @@
 package repository
 
 import (
+	"fmt"
+	"log"
+
 	"github.com/Marityr/gopitman"
-	"github.com/Marityr/gopitman/pkg/logging"
-	"gorm.io/gorm"
+	"github.com/jmoiron/sqlx"
 )
 
 type AuthPostgres struct {
-	db      *gorm.DB
-	logging *logging.Logger
+	db *sqlx.DB
 }
 
-func NewAuthPostgres(db *gorm.DB) *AuthPostgres {
+func NewAuthPostgres(db *sqlx.DB) *AuthPostgres {
 	return &AuthPostgres{db: db}
 }
 
 func (r *AuthPostgres) CreateUser(user gopitman.User) (int, error) {
-	q := DB
-	err := q.Create(&user)
-	if err.RowsAffected == 0 {
-		r.logging.Info(err)
+	var id int
+	query := fmt.Sprintf("INSERT INTO %s (name, username, password_hash) values ($1, $2, $3) RETURNING id", usersTable)
+
+	row := r.db.QueryRow(query, user.Name, user.Username, user.Password)
+	if err := row.Scan(&id); err != nil {
+		log.Println(err)
+		return 0, err
 	}
-	return user.Id, nil
+
+	return id, nil
 }
 
 func (r *AuthPostgres) GetUser(username, password string) (gopitman.User, error) {
 	var user gopitman.User
-	q := DB
 
-	//TODO проверить обработку ошибок от GORM
-	if err := q.Where(`username = ? and password = ?`, username, password).First(&user).Error; err != nil {
-		r.logging.Info(err)
-		return user, err
+	query := fmt.Sprintf("SELECT id FROM %s WHERE username=$1 AND password_hash=$2", usersTable)
+	err := r.db.Get(&user, query, username, password)
+	if err != nil {
+		log.Println(err)
 	}
 
-	return user, nil
+	return user, err
 }

@@ -40,6 +40,14 @@ type sigInInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
+// @Summary SignIn
+// @Tags auth
+// @Description Auth token
+// @ID aunhetication
+// @Accept  json
+// @Produce  json
+// @Param input body sigInInput true "account info"
+// @Router /auth/sign-in [post]
 func (h *Handler) signIn(c *gin.Context) {
 	var input sigInInput
 

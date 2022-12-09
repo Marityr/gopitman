@@ -2,18 +2,17 @@ package main
 
 import (
 	"context"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
 
 	"github.com/Marityr/gopitman"
+	"github.com/Marityr/gopitman/docs"
 	"github.com/Marityr/gopitman/pkg/handler"
-	"github.com/Marityr/gopitman/pkg/logging"
 	"github.com/Marityr/gopitman/pkg/repository"
 	"github.com/Marityr/gopitman/pkg/service"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"github.com/swaggo/swag/example/basic/docs"
 )
 
 // @securityDefinitions.apikey ApiKeyAuth
@@ -21,15 +20,13 @@ import (
 // @name Authorization
 
 func main() {
-	logger := logging.GetLooger()
-
 	if err := initConfig(); err != nil {
-		logrus.Fatal(err)
+		log.Fatal(err)
 	}
 
 	db, err := repository.NewPostgresDB(viper.GetViper())
 	if err != nil {
-		logger.Fatalf("failed to initialize db: %s", err.Error())
+		log.Fatalf("failed to initialize db: %s", err.Error())
 	}
 
 	repos := repository.NewReposiroty(db)
@@ -37,27 +34,27 @@ func main() {
 	handler := handler.NewHandler(services)
 
 	srv := new(gopitman.Server)
-	runHttp(srv, handler, logger)
+	runHttp(srv, handler)
 
 }
 
-func runHttp(srv *gopitman.Server, handler *handler.Handler, logger logging.Logger) {
+func runHttp(srv *gopitman.Server, handler *handler.Handler) {
 	go func() {
 		if err := srv.Run(viper.GetString("port"), handler.InitRoutes()); err != nil {
-			logger.Fatalf("error occured while running http server: %s", err.Error())
+			log.Fatalf("error occured while running http server: %s", err.Error())
 		}
 	}()
 
-	logger.Print("APP Started")
+	log.Print("BonusApp Started")
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<-quit
 
-	logger.Print("App Shutting Down")
+	log.Print("BonusApp Shutting Down")
 
 	if err := srv.Shutdown(context.Background()); err != nil {
-		logger.Errorf("error occured on server shutting down: %s", err.Error())
+		log.Printf("error occured on server shutting down: %s", err.Error())
 	}
 }
 
@@ -69,8 +66,8 @@ func initConfig() error {
 
 func init() {
 	// programmatically set swagger info
-	docs.SwaggerInfo.Title = "GOPITMAN API"
-	docs.SwaggerInfo.Description = "Basic set of tools and practices for API(Rest) services"
+	docs.SwaggerInfo.Title = "Gopitman API"
+	docs.SwaggerInfo.Description = "Service swagger api examples"
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = "localhost:8080"
 	docs.SwaggerInfo.BasePath = "/"

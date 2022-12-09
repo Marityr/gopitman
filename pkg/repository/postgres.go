@@ -2,14 +2,16 @@ package repository
 
 import (
 	"fmt"
+	"log"
 
-	"github.com/Marityr/gopitman/pkg/logging"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
+const (
+	usersTable = "users"
+)
 
 type Config struct {
 	Host     string
@@ -20,9 +22,7 @@ type Config struct {
 	SSLMode  string
 }
 
-func NewPostgresDB(v *viper.Viper) (*gorm.DB, error) {
-	logger := logging.GetLooger()
-
+func NewPostgresDB(v *viper.Viper) (*sqlx.DB, error) {
 	cfg := &Config{
 		Host:     v.GetString("db.host"),
 		Port:     v.GetString("db.port"),
@@ -32,29 +32,18 @@ func NewPostgresDB(v *viper.Viper) (*gorm.DB, error) {
 		Password: v.GetString("db.password"),
 	}
 
-	// newLogger := logger.New(
-	// 	log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
-	// 	logger.Config{
-	// 		LogLevel: logger.Info, // Log level
-	// 		Colorful: true,        // Disable color
-	// 	},
-	// )
-
-	bURL := fmt.Sprintf("%s://%s:%s@%s:%s/%s", cfg.SSLMode, cfg.Username, cfg.Password, cfg.Host, cfg.Port, cfg.DBName)
-
-	db, err := gorm.Open(postgres.Open(bURL), &gorm.Config{
-		// отключение зависимости связей на уровне базы
-		DisableForeignKeyConstraintWhenMigrating: false,
-		// кеширование запроса
-		PrepareStmt: true,
-		// Logger:      newLogger,
-	})
-
+	db, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
+		cfg.Host, cfg.Port, cfg.Username, cfg.DBName, cfg.Password, cfg.SSLMode))
 	if err != nil {
-		logger.Fatal(err)
+		log.Println(err)
+		return nil, err
 	}
 
-	DB = db
+	err = db.Ping()
+	if err != nil {
+		log.Panicln(err)
+		return nil, err
+	}
 
 	return db, nil
 }

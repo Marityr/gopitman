@@ -4,8 +4,19 @@ build:
 run:
 	go run cmd/main.go
 
-swag:
+sw:
 	swag init -g cmd/main.go
 
 test:
 	go test
+
+migratecreate:
+	migrate create -ext sql -dir ./schemes -seq init 
+
+migrateup:
+	migrate -path ./schemes -database 'postgres://arch:123456@localhost:5432/newbonus?sslmode=disable' up 
+
+migratedown:
+	migrate -path ./schemes -database 'postgres://arch:123456@localhost:5432/newbonus?sslmode=disable' down
+
+
