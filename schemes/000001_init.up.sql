@@ -5,19 +5,16 @@ CREATE TABLE users (
     password_hash varchar(255) not null
 );
 
+-- CREATE TABLE category {
+--     id not null unique,
+--     status bool,
+--     title varchar(255) not null,
+--     descriptions text
+-- }
 
-CREATE TABLE customer (
-	id uuid NOT NULL,
-	external_id text NULL,
-	bar_code numeric(13) NOT NULL,
-	activated bool NOT NULL,
-	birthday timestamptz NULL,
-	created timestamptz NOT NULL,
-	first_name text NULL,
-	last_name text NULL,
-	second_name text NULL,
-	update_at timestamptz NOT NULL,
-	sex text NULL,
-	referrer_code text NULL,
-	CONSTRAINT rest_customer_pkey PRIMARY KEY (id)
-);
+-- CREATE TABLE product {
+--     id not null unique,
+--     title varchar(255) not null,
+--     category_id int
+--     CONSTRAINT "table3_category_4ud7av49y_foreign" FOREIGN KEY ("category_id") REFERENCES "category" ("id")
+-- }

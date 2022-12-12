@@ -11,8 +11,8 @@ $ go get github.com/Marityr/gopitman
 
 ## Tools
 - HTTPSERVER (gin)
-- ORM DB (gorm)
-- LOG lib (logrus)
+- sqlx
+- 
 
 ## Exampels
 

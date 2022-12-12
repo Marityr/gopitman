@@ -14,9 +14,9 @@ migratecreate:
 	migrate create -ext sql -dir ./schemes -seq init 
 
 migrateup:
-	migrate -path ./schemes -database 'postgres://arch:123456@localhost:5432/newbonus?sslmode=disable' up 
+	migrate -path ./schemes -database 'postgres://gopitman:12345678@localhost:5432/gopitman?sslmode=disable' up 
 
 migratedown:
-	migrate -path ./schemes -database 'postgres://arch:123456@localhost:5432/newbonus?sslmode=disable' down
+	migrate -path ./schemes -database 'postgres://gopitman:12345678@localhost:5432/gopitman?sslmode=disable' down
 
 

@@ -2,7 +2,10 @@ module github.com/Marityr/gopitman
 
 go 1.18
 
-require gorm.io/datatypes v1.0.7
+require (
+	github.com/gofrs/uuid v4.2.0+incompatible
+	gorm.io/datatypes v1.0.7
+)
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
@@ -28,7 +31,6 @@ require (
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/goccy/go-json v0.9.11 // indirect
-	github.com/gofrs/uuid v4.2.0+incompatible // indirect
 	github.com/golang-jwt/jwt/v4 v4.2.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
