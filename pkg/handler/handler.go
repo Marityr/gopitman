@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"net/http"
 	"time"
 
 	"github.com/Marityr/gopitman/pkg/service"
@@ -13,7 +14,6 @@ import (
 
 type Handler struct {
 	services *service.Service
-	// logging  *logging.Logger
 }
 
 func NewHandler(services *service.Service) *Handler {
@@ -47,17 +47,27 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	api := router.Group("/api/v1") //h.userIdentity
 	{
-		customer := api.Group("/customer")
+		essay := api.Group("/essay")
 		{
-			customer.POST("/", h.createCustomer)
-			customer.GET("/", h.getAllCustomer)
-
-			customer.GET("/:id", h.getCustomerById)
-			customer.PUT("/:id", h.updateCustomer)
-			customer.DELETE("/:id", h.deleteCustomer, h.userIdentity)
-
+			essay.POST("/", h.createEssay)
 		}
+
+		// {
+		// 	ws.GET("/", h.wsEndpoint)
+		// }
 	}
+
+	router.GET("/ws", func(c *gin.Context) {
+		wshandler(c.Writer, c.Request)
+	})
+
+	router.GET("/page", func(c *gin.Context) {
+		w := c.Writer
+		r := c.Request
+		// c.HTML(200, "/static/index.htm", nil)
+		p := "./static/index.htm"
+		http.ServeFile(w, r, p)
+	})
 
 	return router
 }

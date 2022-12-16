@@ -1,20 +1,17 @@
 CREATE TABLE users (
-    id serial not null unique,
-    name varchar(255) not null,
-    username varchar(255) not null unique,
-    password_hash varchar(255) not null
+    id serial NOT NULL unique,
+    name varchar(255) NOT NULL,
+    username varchar(255) NOT NULL unique,
+    --// TODO статус пользователя
+    -- status bool,
+    password_hash varchar(255) NULL
 );
 
--- CREATE TABLE category {
---     id not null unique,
---     status bool,
---     title varchar(255) not null,
---     descriptions text
--- }
-
--- CREATE TABLE product {
---     id not null unique,
---     title varchar(255) not null,
---     category_id int
---     CONSTRAINT "table3_category_4ud7av49y_foreign" FOREIGN KEY ("category_id") REFERENCES "category" ("id")
--- }
+CREATE TABLE essay (
+    id serial NOT NULL unique,
+    code_object uuid NOT NULL DEFAULT uuid_generate_v4(),
+    title varchar(255) NOT NULL,
+    address varchar(255) NULL,
+    coordinates varchar(255) NULL,
+    descriptions varchar(255) NULL 
+)

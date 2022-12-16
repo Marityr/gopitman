@@ -16,47 +16,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/customer": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Customer",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "customer"
-                ],
-                "summary": "CustomerAll",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Page",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Limit",
-                        "name": "limit",
-                        "in": "query"
-                    }
-                ],
-                "responses": {}
-            },
+        "/api/v1/essay": {
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "create customer",
+                "description": "create essay",
                 "consumes": [
                     "application/json"
                 ],
@@ -64,114 +26,19 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "customer"
+                    "essay"
                 ],
-                "summary": "Create customer",
-                "operationId": "create-customer",
+                "summary": "Create Essay",
+                "operationId": "create-essay",
                 "parameters": [
                     {
-                        "description": "list info",
+                        "description": "create essay",
                         "name": "input",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.createCustomerinput"
+                            "$ref": "#/definitions/gopitman.Essay"
                         }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/api/v1/customer/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Customer get by id",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "customer"
-                ],
-                "summary": "Customer By Id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            },
-            "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Customer update",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "customer"
-                ],
-                "summary": "Customer Update",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "customer info",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/gopitman.UpdateCustomer"
-                        }
-                    }
-                ],
-                "responses": {}
-            },
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Customer delete",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "customer"
-                ],
-                "summary": "Customer Delete",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
                     }
                 ],
                 "responses": {}
@@ -235,28 +102,22 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "gopitman.UpdateCustomer": {
+        "gopitman.Essay": {
             "type": "object",
             "properties": {
-                "activated": {
+                "address": {
                     "type": "string"
                 },
-                "birthday": {
+                "code_object": {
                     "type": "string"
                 },
-                "first_name": {
+                "coordinates": {
                     "type": "string"
                 },
-                "last_name": {
+                "descriptions": {
                     "type": "string"
                 },
-                "referrer_code": {
-                    "type": "string"
-                },
-                "second_name": {
-                    "type": "string"
-                },
-                "sex": {
+                "title": {
                     "type": "string"
                 }
             }
@@ -276,29 +137,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "handler.createCustomerinput": {
-            "type": "object",
-            "properties": {
-                "birthday": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "firstName": {
-                    "type": "string"
-                },
-                "lastName": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "referrerCode": {
                     "type": "string"
                 }
             }
