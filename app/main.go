@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	md "github.com/JohannesKaufmann/html-to-markdown"
+	"github.com/Marityr/gopitman/pkg/md"
 	"github.com/gocolly/colly"
 )
 

@@ -2,17 +2,19 @@ module github.com/Marityr/gopitman
 
 go 1.18
 
-require golang.org/x/net v0.5.0
+require (
+	github.com/JohannesKaufmann/html-to-markdown v1.3.6
+	github.com/PuerkitoBio/goquery v1.8.0
+	github.com/gocolly/colly v1.2.0
+	golang.org/x/net v0.5.0
+)
 
 require (
-	github.com/JohannesKaufmann/html-to-markdown v1.3.6 // indirect
-	github.com/PuerkitoBio/goquery v1.8.0 // indirect
 	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/antchfx/htmlquery v1.3.0 // indirect
 	github.com/antchfx/xmlquery v1.3.15 // indirect
 	github.com/antchfx/xpath v1.2.3 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
-	github.com/gocolly/colly v1.2.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
