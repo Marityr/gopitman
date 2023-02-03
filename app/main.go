@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
-	"strings"
 
+	md "github.com/JohannesKaufmann/html-to-markdown"
 	"github.com/gocolly/colly"
 )
 
@@ -47,34 +46,24 @@ func parseRun(url string) {
 }
 
 func SaveArticles(title, body string) {
-	file, err := os.Create(title + ".md")
+	file, err := os.Create("output/" + title + ".md")
 	if err != nil {
 		log.Println(err)
 		os.Exit(1)
 	}
 	defer file.Close()
 
-	tag := "\ntags: #Go \n\n---\n\n"
+	tag := "\ntags: #Habr #Articles \n\n---\n\n"
 	file.WriteString(tag)
 
-	replacer := strings.NewReplacer("<pre><code class=\"go\">", "\n```go\n", "</code></pre>", "\n```\n")
-	out := replacer.Replace(body)
+	converter := md.NewConverter("", true, nil)
 
-	replacer = strings.NewReplacer("<br/>", "", "<ul>", "", "</ul>", "\n", "<li>", "- ", "</li>", "\n")
-	out = replacer.Replace(out)
-
-	mdHeader := "\n#"
-	for i := 1; i <= 6; i++ {
-		header := "<h" + strconv.Itoa(i) + ">"
-		replacer = strings.NewReplacer(header, mdHeader+" ")
-		out = replacer.Replace(out)
-		header = "</h" + strconv.Itoa(i) + ">"
-		replacer = strings.NewReplacer(header, "\n\n")
-		out = replacer.Replace(out)
-		mdHeader += "#"
+	markdown, err := converter.ConvertString(body)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	file.WriteString(out)
+	file.WriteString(markdown)
 
 	fmt.Println("Done.")
 
