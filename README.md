@@ -1,23 +1,8 @@
 # <center><b>GOPITMAN
 
-Basic set of tools and practices for API(Rest) services
-
 [![Header](/screene.jpeg)](https://github.com/Marityr/)
 
-## Install
-`
-$ go get github.com/Marityr/gopitman
-`
-
-## Tools
-- HTTPSERVER (gin)
-- sqlx
-- 
-
-## Exampels
-
-
-## Troubleshooting
+Parsing Habr articles and transforming them into markdown for notes
 
 
 
